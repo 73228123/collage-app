@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ActividadeController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -47,3 +48,27 @@ Route::get('/test', function () {
 
   return view('index', compact('marca', 'slides', 'flyers', 'programas', 'convenios'));
 });
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+});
+
+
+Route::get('/dashboard/actividades/create/',[ActividadeController::class,'create'])
+->name('dashboard.actividades.create')
+->middleware('auth');
+
+Route::get('/dashboard/actividades/',[ActividadeController::class,'index'])
+->name('dashboard.actividades.index')
+->middleware('auth');
+
+Route::post('/dashboard/actividades/',[ActividadeController::class,'store'])
+->name('dashboard.actividades.store')
+->middleware('auth');
+
