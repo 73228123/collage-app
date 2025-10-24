@@ -72,3 +72,10 @@ Route::post('/dashboard/actividades/',[ActividadeController::class,'store'])
 ->name('dashboard.actividades.store')
 ->middleware('auth');
 
+Route::get('/dashboard/actividades/{actividade}/edit',[ActividadeController::class,'edit'])
+->name('dashboard.actividades.edit')
+->middleware('auth');
+
+Route::put('/dashboard/actividades/{actividade}',[ActividadeController::class,'update'])
+->name('dashboard.actividades.update')
+->middleware('auth');

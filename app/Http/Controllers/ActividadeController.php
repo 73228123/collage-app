@@ -20,13 +20,24 @@ class ActividadeController extends Controller
 
     public function store(Request $request)
     {
-        Actividade::create([
+        Actividade::create($request->only('fecha','descripcion'));
+
+        return redirect()->route('dashboard.actividades.index');
+
+    }
+
+    public function edit($id){
+        $actividade = Actividade::find($id);
+        return view('dashboard.actividades.edit',compact('actividade'));
+    }
+
+    public function update(Request $request, $id){
+        $actividade = Actividade::find($id);
+        $actividade->update([
             'fecha' => $request->fecha,
             'descripcion' => $request->descripcion,
         ]);
 
         return redirect()->route('dashboard.actividades.index');
-
-        // Validar y guardar la nueva actividad
     }
 }
